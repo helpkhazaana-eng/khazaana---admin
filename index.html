@@ -199,34 +199,17 @@ setupMessaging();
     if (!messaging) await setupMessaging();
     if (!messaging) return;
 
-    onMessage(messaging, (payload) => {
+    onMessage(messaging, async (payload) => {
       console.log("Foreground FCM message:", payload);
 
       const title = payload.notification?.title || "🔔 NEW Khazaana ORDER";
       const body = payload.notification?.body || "A new order has arrived.";
 
       if (Notification.permission === "granted") {
-        try {
-          // Use the Service Worker notification API so this also works
-          // correctly on iPhone/iPad Home Screen web apps.
-          const registration = await navigator.serviceWorker.ready;
-
-          await registration.showNotification(title, {
-            body: body,
-            icon: "./icon.png",
-            badge: "./icon.png",
-            data: {
-              link:
-                payload.data?.link ||
-                "https://helpkhazaana-eng.github.io/khazaana---admin/"
-            }
-          });
-        } catch (notificationError) {
-          console.error(
-            "Could not show foreground notification:",
-            notificationError
-          );
-        }
+        new Notification(title, {
+          body: body,
+          icon: "./icon.png"
+        });
       }
     });
   } catch (error) {
