@@ -152,7 +152,10 @@ async function enableNotifications() {
     }
 
     const registration = await navigator.serviceWorker.register(
-      "./firebase-messaging-sw.js"
+      "https://helpkhazaana-eng.github.io/khazaana---admin/firebase-messaging-sw.js",
+      {
+        scope: "/khazaana---admin/"
+      }
     );
 
     const token = await getToken(messaging, {
