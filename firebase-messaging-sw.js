@@ -1,12 +1,13 @@
 importScripts(
   "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"
 );
+
 importScripts(
   "https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging-compat.js"
 );
 
 firebase.initializeApp({
-  apiKey: "AIzaSyB_UipI_NKsbMWrmqCh26t_L7lBbRRw3GE",
+  apiKey: "AIzaSyAUZxP--9ycqK5oom_CZMVH5imyes_aKHU",
   authDomain: "khazaana-7088c.firebaseapp.com",
   projectId: "khazaana-7088c",
   storageBucket: "khazaana-7088c.firebasestorage.app",
@@ -32,7 +33,7 @@ messaging.onBackgroundMessage((payload) => {
       link:
         payload.fcmOptions?.link ||
         payload.data?.link ||
-        "/"
+        "https://helpkhazaana-eng.github.io/khazaana---admin/"
     }
   };
 
@@ -43,7 +44,8 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
   const link =
-    event.notification?.data?.link || "/";
+    event.notification?.data?.link ||
+    "https://helpkhazaana-eng.github.io/khazaana---admin/";
 
   event.waitUntil(
     clients.matchAll({
