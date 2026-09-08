@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khazaana · Track Order</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#061813;
+  --bg2:#0a211a;
+  --panel:rgba(235,226,211,.045);
+  --panel2:rgba(235,226,211,.065);
+  --cream:#eee5d5;
+  --cream2:#cfc4b2;
+  --muted:rgba(238,229,213,.52);
+  --line:rgba(238,229,213,.105);
+  --line2:rgba(238,229,213,.17);
+  --green:#163f32;
+  --gold:#c7ae78;
+  --gold-soft:rgba(199,174,120,.13);
+  --success:#25d366;
+}
+
+html{
+  background:var(--bg);
+}
+
+body{
+  min-height:100vh;
+  padding:20px 14px 34px;
+  color:var(--cream);
+  background:
+    radial-gradient(700px 420px at 50% -12%,rgba(55,105,84,.24),transparent 65%),
+    radial-gradient(500px 500px at 100% 55%,rgba(22,63,50,.18),transparent 70%),
+    linear-gradient(180deg,#061812 0%,#09241c 48%,#061611 100%);
+  font-family:'DM Sans',Segoe UI,sans-serif;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.035;
+  background-image:
+    linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom,black,transparent 70%);
+}
+
+.container{
+  width:100%;
+  max-width:760px;
+  margin:auto;
+}
+
+/* ---------- BRAND BAR ---------- */
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:3px 5px 18px;
+}
+
+.brand{
+  color:var(--cream);
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:4px;
+}
+
+.live-pill{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.025);
+  color:var(--muted);
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:1.4px;
+}
+
+.live-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--success);
+  box-shadow:0 0 12px rgba(37,211,102,.7);
+}
+
+/* ---------- HERO ---------- */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:36px 24px 25px;
+  border:1px solid var(--line2);
+  border-radius:30px;
+  background:
+    linear-gradient(145deg,rgba(238,229,213,.075),rgba(238,229,213,.025) 55%,rgba(238,229,213,.045));
+  box-shadow:
+    0 28px 70px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.065);
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  width:360px;
+  height:220px;
+  left:50%;
+  top:-150px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:rgba(90,140,116,.16);
+  filter:blur(55px);
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:29px;
+  border:1px solid rgba(255,255,255,.025);
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;
+  z-index:1;
+  text-align:center;
+}
+
+.hero-kicker{
+  margin-bottom:12px;
+  color:var(--gold);
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:3.4px;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  font-family:'Playfair Display',Georgia,serif;
+  color:var(--cream);
+  font-size:clamp(34px,8vw,52px);
+  line-height:1;
+  letter-spacing:-1.5px;
+  font-weight:700;
+}
+
+.hero-sub{
+  max-width:430px;
+  margin:13px auto 0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+
+.status-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:20px;
+  padding:10px 15px;
+  border:1px solid rgba(199,174,120,.22);
+  border-radius:999px;
+  background:var(--gold-soft);
+  color:var(--cream);
+  font-size:11px;
+  font-weight:700;
+}
+
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 12px rgba(199,174,120,.55);
+}
+
+/* ---------- SUPPORT ---------- */
+
+.support{
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  margin-top:19px;
+}
+
+.support a{
+  width:41px;
+  height:41px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(238,229,213,.035);
+  color:var(--cream2);
+  text-decoration:none;
+  transition:.22s ease;
+}
+
+.support a:hover{
+  transform:translateY(-2px);
+  border-color:var(--line2);
+  background:rgba(238,229,213,.075);
+}
+
+.support .whatsapp{
+  color:var(--success);
+}
+
+/* ---------- PREMIUM SECTION CARDS ---------- */
+
+.progress-card,
+.summary,
+.delivery-card,
+.success{
+  border:1px solid var(--line);
+  background:
+    linear-gradient(145deg,rgba(238,229,213,.055),rgba(238,229,213,.018));
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.13),
+    inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+.progress-card{
+  margin-top:13px;
+  padding:23px 21px 25px;
+  border-radius:25px;
+}
+
+.summary{
+  margin-top:13px;
+  padding:23px 21px;
+  border-radius:25px;
+}
+
+.section-head,
+.summary-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.section-title{
+  color:var(--cream);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.section-note,
+.restaurant{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:600;
+}
+
+/* ---------- TIMELINE ---------- */
+
+.progress-line{
+  --progress:0%;
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  margin:27px 3px 0;
+}
+
+.progress-line::before{
+  content:"";
+  position:absolute;
+  top:18px;
+  left:12%;
+  right:12%;
+  height:1px;
+  background:var(--line2);
+}
+
+.progress-line::after{
+  content:"";
+  position:absolute;
+  top:18px;
+  left:12%;
+  width:var(--progress);
+  height:1px;
+  background:var(--cream2);
+  box-shadow:0 0 10px rgba(238,229,213,.16);
+  transition:.45s ease;
+}
+
+.progress-step{
+  position:relative;
+  z-index:1;
+  width:25%;
+  text-align:center;
+}
+
+.progress-dot{
+  width:36px;
+  height:36px;
+  margin:0 auto 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line2);
+  border-radius:50%;
+  background:#0d2d24;
+  color:rgba(238,229,213,.3);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.5px;
+  transition:.3s ease;
+}
+
+.progress-step.active .progress-dot{
+  background:var(--cream);
+  border-color:var(--cream);
+  color:#0a241c;
+  box-shadow:0 0 20px rgba(238,229,213,.11);
+}
+
+.progress-step.current .progress-dot{
+  box-shadow:
+    0 0 0 5px rgba(238,229,213,.045),
+    0 0 23px rgba(238,229,213,.15);
+}
+
+.progress-label{
+  color:rgba(238,229,213,.34);
+  font-size:9px;
+  font-weight:700;
+  line-height:1.3;
+}
+
+.progress-step.active .progress-label{
+  color:var(--cream2);
+}
+
+/* ---------- ORDER SUMMARY ---------- */
+
+.summary-head{
+  padding-bottom:16px;
+}
+
+.items{
+  border-top:1px solid var(--line);
+}
+
+.item-row,
+.amount-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  border-bottom:1px solid var(--line);
+  padding:13px 0;
+}
+
+.item-name{
+  color:var(--cream);
+  font-size:12px;
+  font-weight:600;
+}
+
+.item-price,
+.amount-value{
+  color:var(--cream);
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.amounts{
+  margin-top:3px;
+}
+
+.amount-row{
+  border-bottom:0;
+  padding:7px 0;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.coupon{
+  color:var(--gold);
+}
+
+.discount{
+  color:#6fe59b;
+}
+
+.total-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-top:10px;
+  padding-top:18px;
+  border-top:1px solid var(--line2);
+}
+
+.total-label{
+  color:var(--muted);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.total-value{
+  color:var(--cream);
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:29px;
+  line-height:1;
+  font-weight:700;
+}
+
+/* ---------- DELIVERY STRIP ---------- */
+
+.delivery-card{
+  margin-top:13px;
+  padding:16px 17px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  border-radius:20px;
+}
+
+.delivery-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:rgba(238,229,213,.05);
+  font-size:18px;
+}
+
+.delivery-title{
+  color:var(--cream);
+  font-size:11px;
+  font-weight:800;
+}
+
+.delivery-text{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.5;
+}
+
+/* ---------- SUCCESS ---------- */
+
+.success{
+  margin-top:13px;
+  padding:25px 18px;
+  text-align:center;
+  border-color:rgba(37,211,102,.17);
+  border-radius:22px;
+  background:rgba(37,211,102,.035);
+}
+
+.success-icon{
+  width:48px;
+  height:48px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(37,211,102,.25);
+  border-radius:50%;
+  background:rgba(37,211,102,.08);
+  color:var(--success);
+  font-size:22px;
+  font-weight:800;
+}
+
+.success-title{
+  margin-top:12px;
+  color:var(--cream);
+  font-size:15px;
+  font-weight:800;
+}
+
+.success-text{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* ---------- FOOTER ---------- */
+
+.home{
+  margin:18px 0 4px;
+  text-align:center;
+}
+
+.home a{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:11px 16px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(238,229,213,.03);
+  color:var(--cream2);
+  text-decoration:none;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.3px;
+  transition:.2s ease;
+}
+
+.home a:hover{
+  background:rgba(238,229,213,.065);
+  color:var(--cream);
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:560px){
+  body{
+    padding:11px 9px 25px;
+  }
+
+  .topbar{
+    padding:2px 4px 14px;
+  }
+
+  .brand{
+    font-size:14px;
+    letter-spacing:3px;
+  }
+
+  .hero{
+    padding:30px 17px 22px;
+    border-radius:25px;
+  }
+
+  .hero h1{
+    font-size:37px;
+  }
+
+  .progress-card,
+  .summary{
+    padding:19px 16px 21px;
+    border-radius:21px;
+  }
+
+  .progress-line{
+    margin-left:0;
+    margin-right:0;
+  }
+
+  .progress-label{
+    font-size:8px;
+  }
+
+  .progress-dot{
+    width:32px;
+    height:32px;
+  }
+
+  .progress-line::before,
+  .progress-line::after{
+    top:16px;
+    left:11%;
+  }
+
+  .total-value{
+    font-size:26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="topbar">
+    <div class="brand">KHAZAANA</div>
+    <div class="live-pill">
+      <span class="live-dot"></span>
+      LIVE TRACKING
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-content">
+
+      <div class="hero-kicker">Your order is on its way</div>
+      <h1>Order Tracking</h1>
+      <div class="hero-sub" id="heroSub">
+        We're keeping you updated in real time.
+      </div>
+
+      <div id="status" class="status-pill">
+        <span class="status-dot"></span>
+        Loading...
+      </div>
+
+      <div class="support">
+        <a href="tel:8695902696" aria-label="Call support">☎</a>
+
+        <a
+          href="https://wa.me/918695902696"
+          target="_blank"
+          rel="noopener"
+          class="whatsapp"
+          aria-label="WhatsApp support">
+          <svg width="21" height="21" viewBox="0 0 32 32" fill="currentColor">
+            <path d="M16.04 5.33c-5.89 0-10.67 4.77-10.67 10.66 0 1.88.49 3.72 1.42 5.34L5 27l5.84-1.53a10.64 10.64 0 0 0 5.2 1.33c5.89 0 10.66-4.77 10.66-10.67S21.93 5.33 16.04 5.33zm0 19.37c-1.63 0-3.22-.44-4.61-1.28l-.33-.2-3.46.91.92-3.37-.22-.35a8.61 8.61 0 1 1 7.7 4.29zm4.72-6.45c-.26-.13-1.55-.76-1.79-.85-.24-.09-.41-.13-.59.13-.17.26-.67.85-.82 1.03-.15.18-.3.2-.56.07-.26-.13-1.08-.4-2.06-1.28-.76-.67-1.27-1.5-1.42-1.75-.15-.26-.02-.39.11-.52.11-.11.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.33-.02-.46-.07-.13-.59-1.43-.81-1.96-.21-.5-.42-.43-.59-.44h-.5c-.17 0-.46.06-.7.33-.24.26-.92.9-.92 2.19 0 1.29.94 2.53 1.07 2.71.13.17 1.85 2.82 4.48 3.95.63.27 1.12.43 1.5.55.63.2 1.21.17 1.67.1.51-.08 1.55-.63 1.77-1.24.22-.61.22-1.13.15-1.24-.06-.11-.24-.17-.5-.3z"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="progress-card">
+
+    <div class="section-head">
+      <div class="section-title">Live Progress</div>
+      <div class="section-note" id="progressNote">Updating live</div>
+    </div>
+
+    <div class="progress-line" id="progressLine">
+
+      <div id="p1" class="progress-step">
+        <div class="progress-dot">01</div>
+        <div class="progress-label">Confirmed</div>
+      </div>
+
+      <div id="p2" class="progress-step">
+        <div class="progress-dot">02</div>
+        <div class="progress-label">Preparing</div>
+      </div>
+
+      <div id="p3" class="progress-step">
+        <div class="progress-dot">03</div>
+        <div class="progress-label">On the way</div>
+      </div>
+
+      <div id="p4" class="progress-step">
+        <div class="progress-dot">04</div>
+        <div class="progress-label">Delivered</div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="summary">
+
+    <div class="summary-head">
+      <div class="section-title">Order Summary</div>
+      <div class="restaurant" id="restaurant">Khazaana</div>
+    </div>
+
+    <div class="items" id="items">
+      <div class="item-row">
+        <span class="item-name">Loading order...</span>
+        <span class="item-price">—</span>
+      </div>
+    </div>
+
+    <div class="amounts">
+
+      <div class="amount-row">
+        <span>Subtotal</span>
+        <span class="amount-value" id="subtotal">₹0</span>
+      </div>
+
+      <div class="amount-row">
+        <span>Delivery</span>
+        <span class="amount-value" id="delivery">₹0</span>
+      </div>
+
+      <div class="amount-row coupon">
+        <span>Coupon</span>
+        <span class="amount-value" id="coupon">None</span>
+      </div>
+
+      <div class="amount-row discount">
+        <span>Discount</span>
+        <span class="amount-value" id="discount">-₹0</span>
+      </div>
+
+    </div>
+
+    <div class="total-row">
+      <div class="total-label">Total Paid</div>
+      <div class="total-value">₹<span id="total">0</span></div>
+    </div>
+
+  </section>
+
+  <div class="delivery-card">
+    <div class="delivery-icon">🛵</div>
+    <div>
+      <div class="delivery-title">Delivery updates are live</div>
+      <div class="delivery-text">
+        This page updates automatically as your order moves through each stage.
+      </div>
+    </div>
+  </div>
+
+  <div id="celebrate"></div>
+
+  <div class="home">
+    <a href="index.html">← Order Again</a>
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+import {
+  getMessaging,
+  getToken,
+  onMessage,
+  isSupported
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyB_UipI_NKsbMWrmqCh26t_L7lBbRRw3GE",
+  authDomain:"khazaana-7088c.firebaseapp.com",
+  projectId:"khazaana-7088c",
+  storageBucket:"khazaana-7088c.firebasestorage.app",
+  messagingSenderId:"988898941531",
+  appId:"1:988898941531:web:851a3d3db24c85e9fa3d7e"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const VAPID_PUBLIC_KEY = "BCsYG8ccnAT3Qz0oSQdYXWHv4Rr9RUBWwAx-ZPzzFiXVXRtLbMuvieytyegKuEcXF1wK1Jd47uLyZ9yI-dpWd1M";
+const BACKEND_URL = "https://khazaana-bozo.onrender.com";
+
+const orderId =
+  new URLSearchParams(location.search).get("id");
+
+function activate(level){
+
+  for(let i=1;i<=4;i++){
+    document
+      .getElementById("p"+i)
+      .classList.remove("active","current");
+  }
+
+  for(let i=1;i<=level;i++){
+    document
+      .getElementById("p"+i)
+      .classList.add("active");
+  }
+
+  document
+    .getElementById("p"+level)
+    .classList.add("current");
+
+  const progress =
+    level===1 ? 0 :
+    level===2 ? 33.33 :
+    level===3 ? 66.66 :
+    100;
+
+  document
+    .getElementById("progressLine")
+    .style.setProperty("--progress",progress+"%");
+}
+
+function statusDotColor(status){
+
+  const dot =
+    document.querySelector(".status-dot");
+
+  if(!dot) return;
+
+  if(status==="Delivered"){
+    dot.style.background="#25d366";
+    dot.style.boxShadow="0 0 13px rgba(37,211,102,.75)";
+  }else if(status==="Out For Delivery"){
+    dot.style.background="#d8b46b";
+    dot.style.boxShadow="0 0 13px rgba(216,180,107,.65)";
+  }else{
+    dot.style.background="#f2b94b";
+    dot.style.boxShadow="0 0 13px rgba(242,185,75,.55)";
+  }
+}
+
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+         (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+function isStandalone() {
+  return window.matchMedia("(display-mode: standalone)").matches ||
+         window.navigator.standalone === true;
+}
+
+function showNotificationButton() {
+  if (document.getElementById("enableNotificationsBtn")) return;
+
+  const btn = document.createElement("button");
+  btn.id = "enableNotificationsBtn";
+  btn.type = "button";
+  btn.textContent = "🔔 Enable Order Updates";
+
+  Object.assign(btn.style, {
+    position: "fixed", left: "50%", bottom: "18px",
+    transform: "translateX(-50%)", zIndex: "99999",
+    padding: "14px 22px", borderRadius: "999px",
+    border: "1px solid rgba(255,255,255,.25)",
+    background: "#111", color: "#fff", fontSize: "15px",
+    fontWeight: "800", boxShadow: "0 8px 28px rgba(0,0,0,.30)",
+    cursor: "pointer", whiteSpace: "nowrap"
+  });
+
+  btn.addEventListener("click", async () => {
+    btn.disabled = true;
+    btn.textContent = "Enabling…";
+
+    const ok = await registerCustomerNotifications(true);
+
+    if (ok) {
+      btn.textContent = "✓ Order Updates Enabled";
+      setTimeout(() => btn.remove(), 1200);
+      return;
+    }
+
+    btn.disabled = false;
+
+    if (isIOS() && !isStandalone()) {
+      btn.textContent = "Add Khazaana to Home Screen first";
+      return;
+    }
+
+    if ("Notification" in window && Notification.permission === "denied") {
+      btn.textContent = "Enable notifications in Settings";
+      return;
+    }
+
+    btn.textContent = "🔔 Try Again";
+  });
+
+  document.body.appendChild(btn);
+}
+
+let customerMessaging = null;
+let foregroundHandlerAttached = false;
+
+async function registerCustomerNotifications(requestPermission = false) {
+  try {
+    if (!orderId || !window.isSecureContext ||
+        !("Notification" in window) ||
+        !("serviceWorker" in navigator)) return false;
+
+    // iPhone/iPad Web Push requires a Home Screen web app.
+    if (isIOS() && !isStandalone()) return false;
+
+    if (!(await isSupported())) return false;
+
+    // Register the worker and wait for an active registration before FCM.
+    const registration = await navigator.serviceWorker.register(
+      "./firebase-messaging-sw.js",
+      { scope: "./" }
+    );
+    await navigator.serviceWorker.ready;
+
+    let permission = Notification.permission;
+
+    // IMPORTANT: Safari must receive this from the user's button tap.
+    if (permission !== "granted" && requestPermission) {
+      permission = await Notification.requestPermission();
+    }
+
+    if (permission !== "granted") return false;
+
+    customerMessaging = getMessaging(app);
+
+    const token = await getToken(customerMessaging, {
+      vapidKey: VAPID_PUBLIC_KEY,
+      serviceWorkerRegistration: registration
+    });
+
+    if (!token) return false;
+
+    const response = await fetch(`${BACKEND_URL}/register-customer-device`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        orderId,
+        token,
+        platform: navigator.platform || "unknown",
+        userAgent: navigator.userAgent
+      })
+    });
+
+    if (!response.ok) return false;
+
+    if (!foregroundHandlerAttached) {
+      foregroundHandlerAttached = true;
+      onMessage(customerMessaging, (payload) => {
+        const title = payload.notification?.title || "Khazaana Order Update";
+        const body = payload.notification?.body || "Your order status has changed.";
+        if (Notification.permission === "granted") {
+          new Notification(title, { body });
+        }
+      });
+    }
+
+    return true;
+  } catch (error) {
+    console.warn("Customer notification setup skipped:", error);
+    return false;
+  }
+}
+
+function setupCustomerNotificationUI() {
+  if (!("Notification" in window)) return;
+
+  // Always give iPhone Home Screen users an explicit button.
+  if (isIOS() && isStandalone()) {
+    if (Notification.permission !== "granted") showNotificationButton();
+    return;
+  }
+
+  // Android Chrome: show button when permission hasn't been granted.
+  if (Notification.permission !== "granted") {
+    showNotificationButton();
+  } else {
+    registerCustomerNotifications(false);
+  }
+}
+
+setupCustomerNotificationUI();
+
+let customerMessaging = null;
+let foregroundHandlerAttached = false;
+
+async function registerCustomerNotifications(requestPermission = false) {
+  try {
+    if (!orderId || !window.isSecureContext || !("Notification" in window) || !("serviceWorker" in navigator)) return false;
+    if (!(await isSupported())) return false;
+
+    // Register FIRST and wait until the worker is actually active.
+    const registration = await navigator.serviceWorker.register("./firebase-messaging-sw.js", { scope: "./" });
+    await navigator.serviceWorker.ready;
+
+    let permission = Notification.permission;
+    if (permission !== "granted" && requestPermission) {
+      permission = await Notification.requestPermission();
+    }
+    if (permission !== "granted") return false;
+
+    customerMessaging = getMessaging(app);
+    const token = await getToken(customerMessaging, {
+      vapidKey: VAPID_PUBLIC_KEY,
+      serviceWorkerRegistration: registration
+    });
+    if (!token) return false;
+
+    const response = await fetch(`${BACKEND_URL}/register-customer-device`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        orderId,
+        token,
+        platform: navigator.platform || "unknown",
+        userAgent: navigator.userAgent
+      })
+    });
+    if (!response.ok) return false;
+
+    if (!foregroundHandlerAttached) {
+      foregroundHandlerAttached = true;
+      onMessage(customerMessaging, (payload) => {
+        const title = payload.notification?.title || "Khazaana Order Update";
+        const body = payload.notification?.body || "Your order status has changed.";
+        if (Notification.permission === "granted") new Notification(title, { body });
+      });
+    }
+    return true;
+  } catch (error) {
+    console.warn("Customer notification setup skipped:", error);
+    return false;
+  }
+}
+
+
+onSnapshot(
+  doc(db,"orders",orderId),
+  (snap)=>{
+
+    if(!snap.exists()){
+      document.getElementById("status").innerHTML =
+        '<span class="status-dot"></span>Order not found';
+      return;
+    }
+
+    const d=snap.data();
+
+    let level=1;
+
+    if(d.status==="Pending"){
+      level=1;
+    }
+
+    if(d.status==="Accepted"){
+      level=2;
+    }
+
+    if(d.status==="Out For Delivery"){
+      level=3;
+    }
+
+    if(d.status==="Delivered"){
+      level=4;
+    }
+
+    activate(level);
+
+    document.getElementById("status").innerHTML =
+      `<span class="status-dot"></span>${d.status || "Pending"}`;
+
+    statusDotColor(d.status);
+
+    document.getElementById("restaurant").innerText =
+      d.restaurant || "Khazaana";
+
+    const statusMessages={
+      Pending:"We've received your order and are waiting for confirmation.",
+      Accepted:"Your food is being prepared fresh for you.",
+      "Out For Delivery":"Your order is on the way to you.",
+      Delivered:"Your order has been delivered. Enjoy your meal!"
+    };
+
+    document.getElementById("heroSub").innerText =
+      statusMessages[d.status] ||
+      "We're keeping you updated in real time.";
+
+    let html="";
+
+    (d.items || []).forEach(i=>{
+
+      html += `
+        <div class="item-row">
+          <span class="item-name">
+            ${i.name} ×${i.qty}
+          </span>
+          <span class="item-price">
+            ₹${i.total}
+          </span>
+        </div>
+      `;
+
+    });
+
+    document.getElementById("items").innerHTML =
+      html || `
+        <div class="item-row">
+          <span class="item-name">No items found</span>
+          <span class="item-price">—</span>
+        </div>
+      `;
+
+    const subtotal =
+      Number(d.subtotal) || 0;
+
+    const delivery =
+      Number(d.delivery) || 0;
+
+    const total =
+      Number(d.total) || 0;
+
+    const coupon =
+      d.coupon || "None";
+
+    let discountAmount=0;
+
+    if(coupon!=="None"){
+      discountAmount =
+        (subtotal + delivery) - total;
+
+      if(discountAmount<0){
+        discountAmount=0;
+      }
+    }
+
+    document.getElementById("subtotal").innerText =
+      "₹"+subtotal;
+
+    document.getElementById("delivery").innerText =
+      delivery===0 ? "FREE" : "₹"+delivery;
+
+    document.getElementById("coupon").innerText =
+      coupon;
+
+    document.getElementById("discount").innerText =
+      "-₹"+discountAmount;
+
+    document.getElementById("total").innerText =
+      total;
+
+    if(d.status==="Delivered"){
+
+      localStorage.removeItem("activeOrder");
+
+      if(!localStorage.getItem("pendingFeedbackOrder")){
+        localStorage.setItem(
+          "pendingFeedbackOrder",
+          orderId
+        );
+      }
+
+      document.getElementById("celebrate").innerHTML=`
+        <div class="success">
+          <div class="success-icon">✓</div>
+          <div class="success-title">
+            Order delivered successfully
+          </div>
+          <div class="success-text">
+            Thank you for ordering from Khazaana.
+          </div>
+        </div>
+      `;
+
+      document.getElementById("progressNote").innerText =
+        "Order complete";
+
+    }else{
+
+      document.getElementById("progressNote").innerText =
+        "Updating live";
+
+    }
+
+  },
+  (error)=>{
+
+    console.error(error);
+
+    document.getElementById("status").innerHTML =
+      '<span class="status-dot"></span>Unable to load order';
+
+  }
+);
+
+</script>
+
+</body>
+</html>
