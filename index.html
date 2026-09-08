@@ -98,7 +98,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAUZxP--9ycqK5oom_CZMVH5imyes_aKHU",
+  apiKey: "AIzaSyB_UipI_NKsbMWrmqCh26t_L7lBbRRw3GE",
   authDomain: "khazaana-7088c.firebaseapp.com",
   projectId: "khazaana-7088c",
   storageBucket: "khazaana-7088c.firebasestorage.app",
@@ -133,21 +133,23 @@ async function setupMessaging() {
   }
 }
 
-async function enableNotifications() {
+async function enableNotifications(silent = false) {
   try {
     if (!messaging) await setupMessaging();
     if (!messaging) return;
 
     if (!window.isSecureContext) {
-      alert("Notifications require HTTPS. Open the Admin Panel using its HTTPS address.");
+      if (!silent) alert("Notifications require HTTPS. Open the Admin Panel using its HTTPS address.");
       return;
     }
 
-    const permission = await Notification.requestPermission();
+    const permission =
+      Notification.permission === "granted"
+        ? "granted"
+        : (silent ? Notification.permission : await Notification.requestPermission());
 
     if (permission !== "granted") {
-      notificationStatus.textContent = "Notification permission was not granted";
-      alert("Please allow notifications for the Khazaana Admin Panel.");
+      notificationStatus.textContent = "Notifications are off";
       return;
     }
 
@@ -188,9 +190,35 @@ async function enableNotifications() {
   }
 }
 
-notificationBtn.addEventListener("click", enableNotifications);
+notificationBtn.addEventListener("click", () => enableNotifications(false));
 
 setupMessaging();
+
+/*
+  Once the user grants browser permission, keep the notification registration
+  alive automatically. The admin does not need to press Enable again unless
+  browser permission itself has been revoked.
+*/
+async function refreshNotificationRegistration() {
+  if (Notification.permission !== "granted") {
+    notificationBtn.classList.remove("enabled");
+    notificationBtn.textContent = "🔔 Enable Order Notifications";
+    notificationStatus.textContent = "Notifications not enabled";
+    return;
+  }
+
+  await enableNotifications(true);
+}
+
+window.addEventListener("load", () => {
+  setTimeout(refreshNotificationRegistration, 500);
+  setInterval(refreshNotificationRegistration, 30 * 60 * 1000);
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) refreshNotificationRegistration();
+});
+
 
 // If the Admin Panel is already open when an order notification arrives,
 // show a browser notification as well.
@@ -199,7 +227,7 @@ setupMessaging();
     if (!messaging) await setupMessaging();
     if (!messaging) return;
 
-    onMessage(messaging, async (payload) => {
+    onMessage(messaging, (payload) => {
       console.log("Foreground FCM message:", payload);
 
       const title = payload.notification?.title || "🔔 NEW Khazaana ORDER";
@@ -208,7 +236,7 @@ setupMessaging();
       if (Notification.permission === "granted") {
         new Notification(title, {
           body: body,
-          icon: "./icon.png"
+          icon: "/icon.png"
         });
       }
     });
