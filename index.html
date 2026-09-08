@@ -133,23 +133,21 @@ async function setupMessaging() {
   }
 }
 
-async function enableNotifications(silent = false) {
+async function enableNotifications() {
   try {
     if (!messaging) await setupMessaging();
     if (!messaging) return;
 
     if (!window.isSecureContext) {
-      if (!silent) alert("Notifications require HTTPS. Open the Admin Panel using its HTTPS address.");
+      alert("Notifications require HTTPS. Open the Admin Panel using its HTTPS address.");
       return;
     }
 
-    const permission =
-      Notification.permission === "granted"
-        ? "granted"
-        : (silent ? Notification.permission : await Notification.requestPermission());
+    const permission = await Notification.requestPermission();
 
     if (permission !== "granted") {
-      notificationStatus.textContent = "Notifications are off";
+      notificationStatus.textContent = "Notification permission was not granted";
+      alert("Please allow notifications for the Khazaana Admin Panel.");
       return;
     }
 
@@ -190,35 +188,9 @@ async function enableNotifications(silent = false) {
   }
 }
 
-notificationBtn.addEventListener("click", () => enableNotifications(false));
+notificationBtn.addEventListener("click", enableNotifications);
 
 setupMessaging();
-
-/*
-  Once the user grants browser permission, keep the notification registration
-  alive automatically. The admin does not need to press Enable again unless
-  browser permission itself has been revoked.
-*/
-async function refreshNotificationRegistration() {
-  if (Notification.permission !== "granted") {
-    notificationBtn.classList.remove("enabled");
-    notificationBtn.textContent = "🔔 Enable Order Notifications";
-    notificationStatus.textContent = "Notifications not enabled";
-    return;
-  }
-
-  await enableNotifications(true);
-}
-
-window.addEventListener("load", () => {
-  setTimeout(refreshNotificationRegistration, 500);
-  setInterval(refreshNotificationRegistration, 30 * 60 * 1000);
-});
-
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden) refreshNotificationRegistration();
-});
-
 
 // If the Admin Panel is already open when an order notification arrives,
 // show a browser notification as well.
@@ -406,16 +378,33 @@ onSnapshot(
   }
 );
 
+async function notifyCustomerStatus(orderId, status) {
+  try {
+    const response = await fetch("https://khazaana-bozo.onrender.com/notify-customer-status", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderId, status })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) console.warn("Customer notification failed:", result);
+    return result;
+  } catch (error) {
+    console.warn("Customer notification request failed:", error);
+  }
+}
+
 window.acceptOrder = async (id) => {
   await updateDoc(doc(db, "orders", id), {
     status: "Accepted"
   });
+  await notifyCustomerStatus(id, "Accepted");
 };
 
 window.outForDelivery = async (id) => {
   await updateDoc(doc(db, "orders", id), {
     status: "Out For Delivery"
   });
+  await notifyCustomerStatus(id, "Out For Delivery");
 };
 
 window.deliverOrder = async (id) => {
@@ -423,6 +412,7 @@ window.deliverOrder = async (id) => {
     status: "Delivered",
     deliveredAt: new Date()
   });
+  await notifyCustomerStatus(id, "Delivered");
 };
 
 </script>
