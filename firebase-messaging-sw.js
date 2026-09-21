@@ -1,5 +1,10 @@
-importScripts("https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging-compat.js");
+importScripts(
+  "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"
+);
+
+importScripts(
+  "https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging-compat.js"
+);
 
 firebase.initializeApp({
   apiKey: "AIzaSyB_UipI_NKsbMWrmqCh26t_L7lBbRRw3GE",
@@ -10,8 +15,64 @@ firebase.initializeApp({
   appId: "1:988898941531:web:851a3d3db24c85e9fa3d7e"
 });
 
-// Firebase Messaging needs this worker to be active for FCM token registration.
-// Background notification messages are displayed automatically by FCM when the
-// page is not in the foreground, so we intentionally do not call
-// showNotification() here (that would risk duplicate notifications).
 const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage((payload) => {
+  console.log(
+    "[firebase-messaging-sw.js] Background message:",
+    payload
+  );
+
+  const title =
+    payload.notification?.title ||
+    "🔔 NEW Khazaana ORDER";
+
+  const options = {
+    body:
+      payload.notification?.body ||
+      "A new Khazaana order has arrived.",
+
+    icon: "/icon.png",
+
+    badge: "/icon.png",
+
+    data: {
+      link:
+        payload.fcmOptions?.link ||
+        payload.data?.link ||
+        "https://helpkhazaana-eng.github.io/khazaana---admin/"
+    }
+  };
+
+  self.registration.showNotification(title, options);
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  const link =
+    event.notification?.data?.link ||
+    "https://helpkhazaana-eng.github.io/khazaana---admin/";
+
+  event.waitUntil(
+    clients
+      .matchAll({
+        type: "window",
+        includeUncontrolled: true
+      })
+      .then((clientList) => {
+
+        for (const client of clientList) {
+          if ("focus" in client) {
+            client.navigate(link);
+            return client.focus();
+          }
+        }
+
+        if (clients.openWindow) {
+          return clients.openWindow(link);
+        }
+
+      })
+  );
+});
