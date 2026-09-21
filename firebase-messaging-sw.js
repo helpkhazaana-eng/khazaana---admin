@@ -7,7 +7,7 @@ importScripts(
 );
 
 firebase.initializeApp({
-  apiKey: "AIzaSyB_UipI_NKsbMWrmqCh26t_L7lBbRRw3GE",
+  apiKey: "AIzaSyAUZxP--9ycqK5oom_CZMVH5imyes_aKHU",
   authDomain: "khazaana-7088c.firebaseapp.com",
   projectId: "khazaana-7088c",
   storageBucket: "khazaana-7088c.firebasestorage.app",
