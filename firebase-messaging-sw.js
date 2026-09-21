@@ -18,10 +18,7 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  console.log(
-    "[firebase-messaging-sw.js] Background message:",
-    payload
-  );
+  console.log("[firebase-messaging-sw.js] Background message:", payload);
 
   const title =
     payload.notification?.title ||
@@ -31,11 +28,8 @@ messaging.onBackgroundMessage((payload) => {
     body:
       payload.notification?.body ||
       "A new Khazaana order has arrived.",
-
     icon: "/icon.png",
-
     badge: "/icon.png",
-
     data: {
       link:
         payload.fcmOptions?.link ||
@@ -55,24 +49,20 @@ self.addEventListener("notificationclick", (event) => {
     "https://helpkhazaana-eng.github.io/khazaana---admin/";
 
   event.waitUntil(
-    clients
-      .matchAll({
-        type: "window",
-        includeUncontrolled: true
-      })
-      .then((clientList) => {
-
-        for (const client of clientList) {
-          if ("focus" in client) {
-            client.navigate(link);
-            return client.focus();
-          }
+    clients.matchAll({
+      type: "window",
+      includeUncontrolled: true
+    }).then((clientList) => {
+      for (const client of clientList) {
+        if ("focus" in client) {
+          client.navigate(link);
+          return client.focus();
         }
+      }
 
-        if (clients.openWindow) {
-          return clients.openWindow(link);
-        }
-
-      })
+      if (clients.openWindow) {
+        return clients.openWindow(link);
+      }
+    })
   );
 });
